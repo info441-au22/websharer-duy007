@@ -15,11 +15,17 @@ router.get('/urls/preview', async function(req, res, next) {
         const webPageData = await fetch(url);
         const webPageString = await webPageData.text();
         const webPageHTML = parser.parse(webPageString);
-        const ogURL = webPageHTML.querySelector('meta[property="og:url"]');
-        let ogSiteName= webPageHTML.querySelector('meta[property="og:sitename"]');
-        const ogIMG = webPageHTML.querySelector('meta[property="og:image"]');
-        let ogTitle = webPageHTML.querySelector('meta[property="og:title"]');
-        const ogDesc = webPageHTML.querySelector('meta[property="og:description"]');
+        // const ogURL = webPageHTML.querySelector('meta[property="og:url"]');
+        // let ogSiteName= webPageHTML.querySelector('meta[property="og:sitename"]');
+        // const ogIMG = webPageHTML.querySelector('meta[property="og:image"]');
+        // let ogTitle = webPageHTML.querySelector('meta[property="og:title"]');
+        // const ogDesc = webPageHTML.querySelector('meta[property="og:description"]');
+        const og = webPageHTML.querySelectorAll('meta[property^="og:"]')
+        const ogURL = og.filter(meta => meta.attributes.property.includes("url")).pop();
+        const ogIMG = og.filter(meta => meta.attributes.property.match(/image$/)).pop();
+        let ogSiteName = og.filter(meta => meta.attributes.property.includes("sitename")).pop();
+        let ogTitle = og.filter(meta => meta.attributes.property.includes("title")).pop();
+        const ogDesc = og.filter(meta => meta.attributes.property.includes("description")).pop();
         const anchor = (ogURL ? `<a href="${ogURL.attributes.content}">`:`<a href="${url}">`)
         const img = (ogIMG ? `<img src="${ogIMG.attributes.content}" style="max-height: 200px; max-width: 270px;">`:``)
         const desc = (ogDesc ? `<p>${ogDesc.attributes.content}</p>`:``)
@@ -48,7 +54,7 @@ router.get('/urls/preview', async function(req, res, next) {
         res.send(htmlRes);
     } catch (err) {
         res.type('txt');
-        res.send(err);
+        res.send(err.message);
     }
 
   });
