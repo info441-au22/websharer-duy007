@@ -1,7 +1,13 @@
 # A3
 ## Deploy URL
+https://stark-hollows-83775.herokuapp.com/
+
 ## Added Information
-Allow user to input their name onto their post. The post preview will include the name of the poster as well.
+
+Allow user to input their name onto their post upload onto the server. The post preview will include the name of the poster as well.
+
+
+
 # A2
 ## Deploy URL
 https://stark-hollows-83775.herokuapp.com/
