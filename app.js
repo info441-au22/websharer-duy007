@@ -5,6 +5,7 @@ import logger from 'morgan';
 import sessions from 'express-session'
 import msIdExpress from 'microsoft-identity-express'
 // ymI8Q~viiCuICbSC32Nm55SFif0SOeynF7I8taVt
+// https://info441.dhnguyen.me/redirect
 const appSettings = {
     appCredentials: {
         clientId:  "b13d17f1-6204-4114-93d1-36adb15367ab",
