@@ -20,8 +20,15 @@ async function main() {
         post: {type: mongoose.Schema.Types.ObjectId, ref: "Post"},
         created_date: Date
     });
-    models.Comment = mongoose.model('Comment', commentSchema);
     console.log("Comment Model created");
+    models.Comment = mongoose.model('Comment', commentSchema);
+    const userInfoSchema = new mongoose.Schema({
+        favorite_website: String,
+        username: String,
+        created_date: Date
+    });
+    models.UserInfo = mongoose.model('UserInfo', userInfoSchema);
+    console.log("UserInfo Model created");
 }
 
 export default models;

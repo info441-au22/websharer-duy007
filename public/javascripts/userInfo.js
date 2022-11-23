@@ -6,6 +6,27 @@ async function init(){
 async function saveUserInfo(){
     //TODO: do an ajax call to save whatever info you want about the user from the user table
     //see postComment() in the index.js file as an example of how to do this
+    document.getElementById("userInfoStatus").innerText = "sending data...";
+    newInfo = document.getElementById('userInfoInput').value;
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('user');
+    try {
+        await fetchJSON(`api/${apiVersion}/userInfos`, {
+            method: "POST",
+            body: {
+                username: username,
+                userInfo: newInfo
+            }
+        })
+    } catch (error) {
+        document.getElementById("userInfoStatus").innerText = "Error"
+        throw(error)
+    }
+    document.getElementById('userInfoInput').value = ""
+    document.getElementById('userInfoStatus').innerText = ""
+    document.getElementById("user_favorite_website").innerHTML = ""
+
+    loadUserInfo()
 }
 
 async function loadUserInfo(){
@@ -21,6 +42,14 @@ async function loadUserInfo(){
     }
     
     //TODO: do an ajax call to load whatever info you want about the user from the user table
+    let infoJSON = await fetchJSON(`api/${apiVersion}/userInfos?username=${username}`)
+    infoDiv = document.getElementById("user_info_div")
+    const divNode = document.createElement("div")
+    divNode.id = "user_favorite_website"
+    divNode.innerHTML = `
+    <p>${escapeHTML(infoJSON.favorite_website)}</p>
+    <p>Last Updated: ${escapeHTML(infoJSON.created_date)}</p>`
+    infoDiv.appendChild(divNode)
 
     loadUserInfoPosts(username)
 }
