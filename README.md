@@ -1,6 +1,8 @@
-# A4-6
+# A4-7
 ## Deploy URL
 https://info441.dhnguyen.me/
+
+Added favorite website for the user info creative component.
 
 # A3
 ## Deploy URL
